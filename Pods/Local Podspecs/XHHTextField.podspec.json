@@ -1,0 +1,31 @@
+{
+  "name": "XHHTextField",
+  "version": "0.2.3",
+  "summary": "",
+  "description": "XHHTextField",
+  "homepage": "https://github.com/Xiaohui666/XHHTextField.git",
+  "license": "MIT",
+  "authors": {
+    "Xiaohui Li": "rxhh@me.com"
+  },
+  "platforms": {
+    "ios": "7.0"
+  },
+  "source": {
+    "git": "https://github.com/Xiaohui666/XHHTextField.git",
+    "tag": "0.2.3"
+  },
+  "resources": [
+    "XHHTextField/class/XHHTextField.h",
+    "XHHTextField/class/XHHTextField.m"
+  ],
+  "frameworks": "UIKit",
+  "requires_arc": true,
+  "subspecs": [
+    {
+      "name": "Common",
+      "source_files": "XHHTextField/class/**.{h,m}",
+      "public_header_files": "XHHTextField/class/*.h"
+    }
+  ]
+}

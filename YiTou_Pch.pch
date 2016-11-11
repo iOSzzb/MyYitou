@@ -1,0 +1,51 @@
+//
+//  YiTou_Pch.pch
+//  Yitou
+//
+//  Created by Xiaohui on 15/7/30.
+//  Copyright (c) 2015年 Xiaohui Li. All rights reserved.
+//
+
+#ifndef Yitou_YiTou_Pch_pch
+#define Yitou_YiTou_Pch_pch
+
+#import "LXHDefine.h"
+#import "UserModel.h"
+#import <SVProgressHUD.h>
+#import "HttpManager.h"
+#import "CommandState.h"
+#import "FastFactory.h"
+#import "CustomNavigation.h"
+
+#define NOTI_GESTURE_HIDENBTN @"Hiden bottom button"
+
+#define UMENG_APPKEY @"56a09e4167e58e9f02001661"
+
+#define FONT_14 [UIFont fontWithName:@"Arial" size:14]
+
+#define FONT_16 [UIFont fontWithName:@"Arial" size:16]
+
+#define BG_BLUEColor COLORWithRGB(221, 241, 248, 1)
+#define BG_WHITEColor [UIColor colorWithRed:0.93 green:0.93 blue:0.95 alpha:1]
+
+#define RELATIVE_X(x) (x/414.0*SCREENWidth)
+#define RELATIVE_Y(y) (y/736.0*SCREENHeight)
+
+#define IMAGE_FOLDER   [NSHomeDirectory() stringByAppendingPathComponent:@"Library/Image"]
+
+#define KEY_CLIENTID    @"is_W94tadpUYWVm7O8cys"
+
+#ifdef DEBUG
+    #define NSLOG(...) NSLog(__VA_ARGS__)
+    #define SEND_SMS_INTERVAL  10
+    #define SEND_EMAIL_INTERVAL 5
+    #define FOR_PRODUCT NO
+
+#else
+    #define NSLOG(...)
+    #define SEND_SMS_INTERVAL  60
+    #define SEND_EMAIL_INTERVAL 20
+    #define FOR_PRODUCT YES
+#endif
+
+#endif
