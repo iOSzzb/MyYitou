@@ -314,9 +314,10 @@
     [quanView setTag:indx];
     
     UILabel *nameLab = [[UILabel alloc] initWithFrame:CGRectMake(0, VIEWFOY(infoLb), VIEWFSW(backView)-20, 30)];
-    nameLab.text = @"现金红包";
+    //nameLab.text = @"现金红包";
+    nameLab.text = @"新手注册红包";
     [nameLab setTextColor:[UIColor colorWithRed:0.95 green:0.48 blue:0.52 alpha:1.00]];
-    [nameLab setFont:[UIFont systemFontOfSize:30]];
+    [nameLab setFont:[UIFont systemFontOfSize:25]];
     [nameLab setTextAlignment:NSTextAlignmentRight];
     [quanView addSubview:nameLab];
     

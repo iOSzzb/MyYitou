@@ -55,7 +55,7 @@
 
         }
         else {
-            temp = [NSString stringWithFormat:@"%.2f新手红包",couponCtrl.addMoney];
+            temp = [NSString stringWithFormat:@"%.2f现金券",couponCtrl.addMoney];
         }
         if ([couponStr length]>1){
             couponStr = [NSString stringWithFormat:@"%@,%@",couponStr,temp];
@@ -328,7 +328,7 @@
     [scrollview addSubview:earnView];
     orignY = VIEWFH_Y(earnView)-1;
 
-    if (!_tender.isExp && ![_tender.timeCount isEqualToString:@"1"]){
+    if (!_tender.isExp){
         UIButton *quanView = [[UIButton alloc] initWithFrame:CGRectMake(0, orignY, SCREENWidth, CELLHeight)];
         [self setViewBorder:quanView];
         

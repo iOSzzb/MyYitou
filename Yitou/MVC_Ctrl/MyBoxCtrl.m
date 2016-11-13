@@ -65,8 +65,9 @@
         if (weakSelf.dataSource.count == 0){
             [SVProgressHUD showInfoWithStatus:@"没有该类型的优惠券"];
         }
-        if (weakSelf.dataSource.count % 10 == 0&& weakSelf.pageIndx > 1)
-            [weakSelf loadTableviewFooter];
+        //限定显示10条
+//        if (weakSelf.dataSource.count % 10 == 0&& weakSelf.pageIndx > 1)
+//            [weakSelf loadTableviewFooter];
         [weakSelf.tableview reloadData];
 
     }];
@@ -88,7 +89,8 @@
 }
 
 - (void)loadTableview{
-    tableview = [[UITableView alloc] initWithFrame:CGRectMake(0, 104, SCREENWidth, SCREENHeight-104)];
+//    tableview = [[UITableView alloc] initWithFrame:CGRectMake(0, 104, SCREENWidth, SCREENHeight-104)];
+    tableview = [[UITableView alloc] initWithFrame:CGRectMake(0, 104, SCREENWidth, SCREENHeight-104) style:UITableViewStyleGrouped];
     [tableview setDelegate:self];
     [tableview setDataSource:self];
     [self.view addSubview:tableview];
@@ -117,7 +119,35 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    if (dataSource.count >= 10) {
+        return 10;
+    }
     return dataSource.count;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+    if (dataSource.count >= 10) {
+        UILabel *lb = [[UILabel alloc] init];
+        lb.frame = CGRectMake(0, 0, tableView.bounds.size.width, 20);
+        lb.text = @"仅显示半年内数据，详情可见电脑端";
+        lb.textColor = [UIColor colorWithRed:0.7 green:0.7 blue:0.71 alpha:1];
+        lb.textAlignment = NSTextAlignmentCenter;
+        NSInteger size = SCREENWidth>321?13:11;
+        lb.font = [UIFont systemFontOfSize:size];
+        return lb;
+    }
+    return nil;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    if (dataSource.count >= 10) {
+        return 20;
+    }
+    return 0.5;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 0.5;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
