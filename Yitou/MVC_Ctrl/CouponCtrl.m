@@ -13,7 +13,7 @@
 #define COUPONHeight  120
 
 @interface CouponCtrl ()
-
+//@property (nonatomic, assign) BOOL isHuangjin;
 @end
 
 @implementation CouponCtrl{
@@ -29,6 +29,7 @@
     UIImageView     *imgvXianjin;
     UIImageView     *imgvHongbao;
     CustomNavigation *customNav;
+
 }
 
 - (void)viewDidLoad {
@@ -47,6 +48,7 @@
     if (jiaxiIndex != -1){
         _addCoupon = [[[jiaxiAry objectAtIndex:jiaxiIndex] objectForKey:@"details"] floatValue];
         _jiaxiID = [[jiaxiAry objectAtIndex:jiaxiIndex] objectForKey:@"log_id"];
+        _jiaxiTypeId = [[jiaxiAry objectAtIndex:jiaxiIndex] objectForKey:@"prize_type_id"];
     }
     else{
         _addCoupon = 0.0;
@@ -186,13 +188,16 @@
     [scrollview addSubview:quanView];
     orignY = VIEWFH_Y(quanView)+20;
 
-    
-
-    [quanView addTarget:self action:@selector(clickJiaxiCoupon:) forControlEvents:UIControlEventTouchUpInside];
-    
-    
+    if ([prizeTypeId isEqualToString:@"52"]) {
+        [quanView addTarget:self action:@selector(clickedHuangJinJiaXi:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    else {
+        [quanView addTarget:self action:@selector(clickJiaxiCoupon:) forControlEvents:UIControlEventTouchUpInside];
+    }
 }
-
+- (void)clickedHuangJinJiaXi:(id)sender {
+    [self clickJiaxiCoupon:sender];
+}
 - (void)clickJiaxiCoupon:(id)sender{
     if (jiaxiIndex == [sender tag]){
         jiaxiIndex = -1;
@@ -394,5 +399,7 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
+
+
 
 @end

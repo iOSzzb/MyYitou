@@ -45,17 +45,22 @@
     NSString *couponStr = @"";
     if (couponCtrl.addCoupon >0.0){
         couponStr = [NSString stringWithFormat:@"%.2f",couponCtrl.addCoupon];
-        couponStr = [couponStr stringByAppendingString:@"%加息券"];
+        if ([couponCtrl.jiaxiTypeId isEqualToString:@"52"]) {
+            couponStr = [couponStr stringByAppendingString:@"%黄金加息券"];
+        }
+        else {
+            couponStr = [couponStr stringByAppendingString:@"%加息券"];
+        }
         [calculator loadDataSource:_dataSource coupon:couponCtrl.addCoupon];
     }
     if (couponCtrl.addMoney >0.0){
         NSString *temp;
         if (couponCtrl.hongbaoID != nil && couponCtrl.hongbaoID.length > 0) {
-            temp = [NSString stringWithFormat:@"%.2f现金红包",couponCtrl.addMoney];
+            temp = [NSString stringWithFormat:@"%.2f元新手注册红包",couponCtrl.addMoney];
 
         }
         else {
-            temp = [NSString stringWithFormat:@"%.2f现金券",couponCtrl.addMoney];
+            temp = [NSString stringWithFormat:@"%.2f元现金券",couponCtrl.addMoney];
         }
         if ([couponStr length]>1){
             couponStr = [NSString stringWithFormat:@"%@,%@",couponStr,temp];
@@ -482,14 +487,14 @@
         NSString *title;
         NSString *sureStr;
         if(couponCtrl.hongbaoID != nil && couponCtrl.hongbaoID.length > 0) {
-            strMininvest = [NSString stringWithFormat:@"投资金额需超过%.2f元时现金红包才能使用,是否不使用现金红包",couponCtrl.mininvest];
-            title = @"现金红包无法使用";
-            sureStr = @"不使用现金红包";
+            strMininvest = [NSString stringWithFormat:@"投资金额需超过%.2f元时新手注册红包才能使用,是否不使用新手注册红包",couponCtrl.mininvest];
+            title = @"新手注册红包无法使用";
+            sureStr = @"不使用新手注册红包";
         }
         else {
-            strMininvest = [NSString stringWithFormat:@"投资金额需超过%.2f元时新手红包才能使用,是否不使用新手红包",couponCtrl.mininvest];
-            title = @"新手红包无法使用";
-            sureStr = @"不使用新手红包";
+            strMininvest = [NSString stringWithFormat:@"投资金额需超过%.2f元时现金券才能使用,是否不使用现金券",couponCtrl.mininvest];
+            title = @"现金券无法使用";
+            sureStr = @"不使用现金券";
         }
         
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:title message:strMininvest preferredStyle:UIAlertControllerStyleAlert];
@@ -544,7 +549,7 @@
             return ;
         }
         webBrower = [[WebBrower alloc] initWithFrame:CGRectMake(0, 64, SCREENWidth, SCREENHeight-64)];
-        NSString *urlStr = [[receiveData  objectForKey:@"data"] objectForKey:@"r_url"];
+        NSString *urlStr = [[receiveData objectForKey:@"data"] objectForKey:@"r_url"];
         [webBrower loadWebBrowerWithPostStr:urlStr andBlock:^(NSInteger rtCode,NSString *newUrlStr) {
             NSLOG(@"%@",newUrlStr);
 
