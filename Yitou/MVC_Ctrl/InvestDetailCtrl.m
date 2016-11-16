@@ -18,12 +18,13 @@
 #define CELLHeight  45
 
 @interface InvestDetailCtrl ()
-
+@property (nonatomic, strong) InvertInfoView *infoView;
+@property (nonatomic, assign) CGRect infoviewFrame;
 @end
 
 @implementation InvestDetailCtrl{
     float orignY;
-    InvertInfoView *infoView;
+//    InvertInfoView *infoView;
     UIScrollView *scrollview;
     UIButton *investBtn;
     CustomNavigation *customNav;
@@ -39,10 +40,13 @@
 
 - (void)viewWillBack{
     [timeRunloop invalidate];
-    [infoView removeFromSuperview];
+    [self.infoView removeFromSuperview];
     [self.navigationController popViewControllerAnimated:YES];
 }
-
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self refreshData];
+}
 - (void)loadAllView{
     [self loadScrollView];
     
@@ -143,15 +147,19 @@
 }
 
 - (void)loadInvertDetail{
-    infoView = [[InvertInfoView alloc] init];
-    [infoView loadInfoWithData:_tender andDataSource:_detail];
-    [infoView setFrame:CGRectMake(0, orignY, SCREENWidth, infoView.contentSize)];
+    self.infoView = [[InvertInfoView alloc] init];
+    [self.infoView loadInfoWithData:_tender andDataSource:_detail];
+    if (CGRectEqualToRect(self.infoviewFrame, CGRectZero)) {
+        self.infoviewFrame = CGRectMake(0, orignY, SCREENWidth, self.infoView.contentSize);
 
-    [infoView.layer setBorderColor:[COLORWithRGB(233, 233, 233, 1) CGColor]];
-    [infoView.layer setBorderWidth:1.0];
-    [infoView setBackgroundColor:[UIColor whiteColor]];
-    [scrollview addSubview:infoView];
-    orignY = VIEWFH_Y(infoView);
+    }
+    [self.infoView setFrame:self.infoviewFrame];
+
+    [self.infoView.layer setBorderColor:[COLORWithRGB(233, 233, 233, 1) CGColor]];
+    [self.infoView.layer setBorderWidth:1.0];
+    [self.infoView setBackgroundColor:[UIColor whiteColor]];
+    [scrollview addSubview:self.infoView];
+    orignY = VIEWFH_Y(self.infoView);
 }
 
 - (void)loadImageView{
@@ -298,6 +306,33 @@
     invest.dataSource = _detail;
     [self.navigationController pushViewController:invest animated:YES];
 
+}
+
+- (void)refreshData{
+//    __weak typeof(infoView) weakInfoView;
+    __weak typeof(self) weakSelf = self;
+    [HttpManager getInvestDetailWithID:_tender.tenderID Block:^(RequestResult rqCode, NSString *describle, NSDictionary *receiveData) {
+        [SVProgressHUD dismiss];
+        if (rqCode == rqSuccess && !_tender.isExp){
+//            InvestDetailCtrl *invest = [[InvestDetailCtrl alloc] init];
+//            invest.tender = tender;
+//            invest.detail = receiveData;
+//            [invest setHidesBottomBarWhenPushed:YES];
+//            [weakSelf.navigationController pushViewController:invest animated:YES];
+            [weakSelf.infoView removeFromSuperview];
+            Tender *tender = [[Tender alloc] init];
+            [tender createTenderModel:receiveData];
+            weakSelf.tender = tender;
+            weakSelf.detail = receiveData;
+            [self loadInvertDetail];
+            weakSelf.infoView.frame = weakSelf.infoviewFrame;
+        }
+        else if (rqCode == rqSuccess){
+
+        }
+        else
+            [SVProgressHUD showErrorWithStatus:describle];
+    }];
 }
 
 - (void)didReceiveMemoryWarning {
