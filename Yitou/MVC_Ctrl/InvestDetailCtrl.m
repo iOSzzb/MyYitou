@@ -322,6 +322,9 @@
             [weakSelf.infoView removeFromSuperview];
             Tender *tender = [[Tender alloc] init];
             [tender createTenderModel:receiveData];
+            if (![tender.balance isEqualToString:weakSelf.tender.balance]) {
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"TenderReloadNotification" object:nil];
+            }
             weakSelf.tender = tender;
             weakSelf.detail = receiveData;
             [self loadInvertDetail];

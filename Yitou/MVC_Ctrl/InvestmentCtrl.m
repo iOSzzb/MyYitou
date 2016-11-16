@@ -59,10 +59,14 @@
         [MobClick event:@"2101"];
         [weakSelf loadInvestTypeView];
     }];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadAllData) name:@"TenderReloadNotification" object:nil];
+
 }
 
 
-
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
 #pragma mark 加载UI
 
@@ -259,6 +263,10 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+}
+
+- (void)reloadAllData {
+    [tableview.mj_header beginRefreshing];
 }
 
 @end
