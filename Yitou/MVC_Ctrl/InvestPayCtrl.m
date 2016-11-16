@@ -542,6 +542,7 @@
     }
 
     [paraDict setValue:[self dictionaryToJson:remark] forKey:@"remark"];
+
     [HttpManager hmRequestWithPara:@{@"cmdid":@"initiative_tender",@"data":paraDict} Block:^(RequestResult rqCode, NSString *describle, NSDictionary *receiveData) {
         [SVProgressHUD dismiss];
         if (rqCode != rqSuccess){
@@ -550,6 +551,7 @@
         }
         webBrower = [[WebBrower alloc] initWithFrame:CGRectMake(0, 64, SCREENWidth, SCREENHeight-64)];
         NSString *urlStr = [[receiveData objectForKey:@"data"] objectForKey:@"r_url"];
+        urlStr = [urlStr stringByReplacingOccurrencesOfString:@"\n" withString:@""];
         [webBrower loadWebBrowerWithPostStr:urlStr andBlock:^(NSInteger rtCode,NSString *newUrlStr) {
             NSLOG(@"%@",newUrlStr);
 

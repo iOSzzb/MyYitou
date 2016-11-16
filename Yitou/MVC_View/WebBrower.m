@@ -20,6 +20,8 @@
 
 - (id)loadWebBrowerWithPostStr:(NSString *)postStr andBlock:(WebBrowerBlock)block{
     postStr = [postStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+//    postStr = [postStr stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet characterSetWithCharactersInString:postStr]];
+//    postStr = [postStr stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     webView__ = [[UIWebView alloc]initWithFrame:CGRectMake(0, 0, VIEWFSW(self), VIEWFSH(self)-TOOLHeight)];
     block__ = block;
     NSURL *url = [NSURL URLWithString:postStr];
