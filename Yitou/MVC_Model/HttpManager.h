@@ -13,15 +13,15 @@
 //#define SERVERURL_FILE      @"http://116.205.5.38:8002/api/SzytouApi.ashx"
 
 
-//#if DEBUG
-//    #define SERVERURL_Yitou     @"http://116.205.5.38:8002/api/SzytouAPI/Api"
+#if DEBUG
+    #define SERVERURL_Yitou     @"http://116.205.5.38:8002/api/SzytouAPI/Api"
     //#define SERVERURL_Yitou     @"http://apitest.haokoudai.com:9092/#"
 
-//    #define SERVERURL_FILE      @"http://116.205.5.38:8002/api/SzytouApi.ashx"
-//#else
+    #define SERVERURL_FILE      @"http://116.205.5.38:8002/api/SzytouApi.ashx"
+#else
     #define SERVERURL_Yitou     @"http://120.25.250.1:8001/api/SzytouAPI/Api"
     #define SERVERURL_FILE      @"http://120.25.250.1:8001/api/SzytouApi.ashx"
-//#endif
+#endif
 
 typedef enum {
     rqSuccess   ,   //数据请求成功 解析成功  返回的reuslt_code为000

@@ -150,7 +150,7 @@
 
         couponInfo = receiveData;
         [calculator loadTouziquanActivity:[receiveData objectForKey:@"touzijuan"]];
-        if ([[couponInfo objectForKey:@"jiaxijuan"] count] > 0 || [[couponInfo objectForKey:@"xianjinjuan"] count] > 0){
+        if ([[couponInfo objectForKey:@"jiaxijuan"] count] > 0 || [[couponInfo objectForKey:@"xianjinjuan"] count] > 0 || [[couponInfo objectForKey:@"xianjinhongbao"] count] > 0){
             [couponLB setText:@"有可用的优惠券"];
             [couponLB setTextColor:[UIColor colorWithRed:0.16 green:0.55 blue:0.88 alpha:1]];
         }
